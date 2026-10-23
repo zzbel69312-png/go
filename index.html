@@ -7,56 +7,48 @@
   <style>
     body {
       margin: 0;
-      padding: 0;
       height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background-color: #010101;
-      color: #ffffff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #000;
+      color: #fff;
+      font-family: sans-serif;
       text-align: center;
-      cursor: pointer;
     }
     .btn {
-      margin-top: 24px;
-      padding: 16px 36px;
-      background: linear-gradient(90deg, #fe2c55, #25f4ee);
-      color: #ffffff;
+      display: inline-block;
+      margin-top: 20px;
+      padding: 18px 36px;
+      background: #fe2c55;
+      color: #fff;
       font-size: 18px;
       font-weight: bold;
-      border: none;
-      border-radius: 30px;
-      box-shadow: 0 4px 15px rgba(254, 44, 85, 0.4);
-    }
-    .subtext {
-      margin-top: 12px;
-      font-size: 13px;
-      color: #888888;
+      text-decoration: none;
+      border-radius: 8px;
     }
   </style>
 </head>
-<body onclick="launchApp()">
-  <div style="font-size: 20px; font-weight: bold;">TikTok Lite 리워드 열기</div>
-  <button class="btn">앱으로 바로 이동</button>
-  <div class="subtext">화면을 터치하면 바로 앱이 실행됩니다.</div>
+<body>
+  <h2>TikTok Lite 이벤트 페이지로 이동</h2>
+  
+  <!-- 자바스크립트 우회가 막힐 때를 대비한 HTML 순수 a 태그 (브라우저가 절대 차단 못 함) -->
+  <a id="appLink" class="btn" href="snssdk1180://invite?url=https%3A%2F%2Flite.tiktok.com%2Ft%2FZS9UTKYL9hP6m-sYAix%2F">
+    TikTok Lite 앱 열기
+  </a>
 
   <script>
-    const appIntent = "intent://lite.tiktok.com/t/ZS9UTKYL9hP6m-sYAix/#Intent;scheme=https;package=com.zhiliaoapp.musically.go;end;";
-    const fallbackUrl = "https://lite.tiktok.com/t/ZS9UTKYL9hP6m-sYAix/";
+    const deepLink = "snssdk1180://invite?url=https%3A%2F%2Flite.tiktok.com%2Ft%2FZS9UTKYL9hP6m-sYAix%2F";
+    const fallback = "https://lite.tiktok.com/t/ZS9UTKYL9hP6m-sYAix/";
 
-    function launchApp() {
-      const ua = navigator.userAgent.toLowerCase();
-      if (ua.includes("android")) {
-        location.href = appIntent;
-      } else {
-        location.href = fallbackUrl;
-      }
-    }
+    // 1. 페이지 로드 즉시 다이렉트 호출 시도
+    location.href = deepLink;
 
-    // 진입 즉시 1차 자동 시도
-    setTimeout(launchApp, 100);
+    // 2. 1.5초 동안 앱 실행 실패(미설치 등) 시 일반 웹 링크로 대체
+    setTimeout(function() {
+      location.href = fallback;
+    }, 1500);
   </script>
 </body>
 </html>
