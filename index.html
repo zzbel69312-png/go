@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TikTok Lite</title>
+</head>
+<body style="display:flex; justify-content:center; align-items:center; height:100vh; margin:0; background:#000; color:#fff; font-family:sans-serif;">
+  <p>TikTok Lite 앱으로 안전하게 연결 중입니다...</p>
+
+  <script>
+    const fallbackUrl = "https://lite.tiktok.com/t/ZS9UTKYL9hP6m-sYAix/";
+    const ua = navigator.userAgent.toLowerCase();
+
+    function directOpen() {
+      if (ua.includes("android")) {
+        location.href = "intent://lite.tiktok.com/t/ZS9UTKYL9hP6m-sYAix/#Intent;scheme=https;package=com.zhiliaoapp.musically.go;end;";
+      } else {
+        location.href = fallbackUrl;
+      }
+    }
+
+    setTimeout(directOpen, 50);
+  </script>
+</body>
+</html>
