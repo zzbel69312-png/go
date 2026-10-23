@@ -12,43 +12,47 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: #000;
+      background: #010101;
       color: #fff;
-      font-family: sans-serif;
+      font-family: -apple-system, sans-serif;
       text-align: center;
     }
     .btn {
       display: inline-block;
-      margin-top: 20px;
-      padding: 18px 36px;
-      background: #fe2c55;
+      margin-top: 24px;
+      padding: 16px 36px;
+      background: linear-gradient(90deg, #fe2c55, #25f4ee);
       color: #fff;
       font-size: 18px;
       font-weight: bold;
       text-decoration: none;
-      border-radius: 8px;
+      border-radius: 30px;
+      box-shadow: 0 4px 15px rgba(254, 44, 85, 0.4);
     }
   </style>
 </head>
-<body>
-  <h2>TikTok Lite 이벤트 페이지로 이동</h2>
+<body onclick="launchApp()">
+  <div style="font-size: 20px; font-weight: bold;">TikTok Lite 리워드 열기</div>
   
-  <!-- 자바스크립트 우회가 막힐 때를 대비한 HTML 순수 a 태그 (브라우저가 절대 차단 못 함) -->
-  <a id="appLink" class="btn" href="snssdk1180://invite?url=https%3A%2F%2Flite.tiktok.com%2Ft%2FZS9UTKYL9hP6m-sYAix%2F">
-    TikTok Lite 앱 열기
+  <a id="targetBtn" class="btn" href="intent://lite.tiktok.com/t/ZS9UTKYL9hP6m-sYAix/#Intent;scheme=https;package=com.tiktok.portal;end;">
+    앱으로 바로 이동
   </a>
 
   <script>
-    const deepLink = "snssdk1180://invite?url=https%3A%2F%2Flite.tiktok.com%2Ft%2FZS9UTKYL9hP6m-sYAix%2F";
-    const fallback = "https://lite.tiktok.com/t/ZS9UTKYL9hP6m-sYAix/";
+    const krIntent = "intent://lite.tiktok.com/t/ZS9UTKYL9hP6m-sYAix/#Intent;scheme=https;package=com.tiktok.portal;end;";
+    const fallbackUrl = "https://lite.tiktok.com/t/ZS9UTKYL9hP6m-sYAix/";
 
-    // 1. 페이지 로드 즉시 다이렉트 호출 시도
-    location.href = deepLink;
+    function launchApp() {
+      const ua = navigator.userAgent.toLowerCase();
+      if (ua.includes("android")) {
+        location.href = krIntent;
+      } else {
+        location.href = fallbackUrl;
+      }
+    }
 
-    // 2. 1.5초 동안 앱 실행 실패(미설치 등) 시 일반 웹 링크로 대체
-    setTimeout(function() {
-      location.href = fallback;
-    }, 1500);
+    // 진입 0.1초 후 즉시 한국판 앱 인텐트 호출
+    setTimeout(launchApp, 100);
   </script>
 </body>
 </html>
